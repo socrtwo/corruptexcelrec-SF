@@ -1,0 +1,4 @@
+C:\Users\socrtwo\Desktop\excel_recovery_3.1.3_source\Excel Recovery\bin\Debug\Excel Recovery.exe.config
+C:\Users\socrtwo\Desktop\excel_recovery_3.1.3_source\Excel Recovery\obj\Debug\Excel Recovery.exe
+C:\Users\socrtwo\Desktop\excel_recovery_3.1.3_source\Excel Recovery\obj\Debug\Excel Recovery.xml
+C:\Users\socrtwo\Desktop\excel_recovery_3.1.3_source\Excel Recovery\obj\Debug\Excel Recovery.pdb

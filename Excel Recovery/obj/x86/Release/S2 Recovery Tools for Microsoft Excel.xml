@@ -1,0 +1,196 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+S2RecoveryToolsforMicrosoftExcel
+</name>
+</assembly>
+<members>
+<member name="P:Excel_Recovery.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Boite">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Broom_icon_svg">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.BSicon">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.btn_donateCC_LG2">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Calculator128">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.charticon">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Cimaware_ExcelFix">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Clipboard01">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Crystal_Clear_app_Startup_Wizard2">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Crystal_file_temporary">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.excel_2007">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.excel_recovery_3_1_3_screenshot">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.ExcelRecovery">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.ExcelRecovery1">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.ExcelRecovery2">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.ExcelRecovery3">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.ExcelRecovery4">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.ExternalReference">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Extractlove128">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Folder64">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Folder641">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Folder642">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Icon_open_file_2">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Icon_open_file_96x96">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Kernel_Excel_Box">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Kernel_Excel_Box1">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Kernel_Excel_Box2">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.MBrepair">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Microsoft_Excel">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.MicrosoftWord">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.offvis">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.OnlineRecovery">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.repair">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.repairxml">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.reregister">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Safe_128">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.saveIcon">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.viewicon">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.Wizard_Hat_Icon">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.word_2007">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.WordpadiconWindows7">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.wrench">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Excel_Recovery.My.Resources.Resources.zipperrepair4">
+	<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member><member name="T:Excel_Recovery.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+</members>
+</doc>

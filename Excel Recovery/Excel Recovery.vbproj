@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{37B6AAB8-754C-445F-9658-7830A20FDA2B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>Excel_Recovery.My.MyApplication</StartupObject>
+    <RootNamespace>Excel_Recovery</RootNamespace>
+    <AssemblyName>S2 Recovery Tools for Microsoft Excel</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <GenerateManifests>false</GenerateManifests>
+    <SignManifests>true</SignManifests>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <PublishUrl>C:\Users\socrtwo\Desktop\03-01-excel-recovery\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <SupportUrl>http://godskingsandheroes.info/software/</SupportUrl>
+    <ProductName>Excel Recovery</ProductName>
+    <PublisherName>Paul Pruitt</PublisherName>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>4.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>S2 Recovery Tools for Microsoft Excel.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>S2 Recovery Tools for Microsoft Excel.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon64X64.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>Custom</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>363FE78307079DB4817AE4095E48EAF6DA38C4F2</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DocumentationFile>S2 Recovery Tools for Microsoft Excel.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>S2 Recovery Tools for Microsoft Excel.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\..\..\..\Programs\Microsoft Visual Studio 10.0\Visual Studio Tools for Office\PIA\Office12\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Forms\FormAutoSave.designer.vb">
+      <DependentUpon>FormAutoSave.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAutoSave.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="\\SOCRTWO-OFFICE\Users\Public\Documents\excelrecoverybackup\FormMain.vb">
+      <SubType>Form</SubType>
+      <Link>Forms\FormMain.vb</Link>
+    </Compile>
+    <Compile Include="\\SOCRTWO-OFFICE\Users\Public\Documents\excelrecoverybackup\FormMain.Designer.vb">
+      <DependentUpon>FormMain.vb</DependentUpon>
+      <SubType>Form</SubType>
+      <Link>Forms\FormMain.Designer.vb</Link>
+    </Compile>
+    <Compile Include="Forms\FormProgress.designer.vb">
+      <DependentUpon>FormProgress.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormProgress.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\FormAutoSave.resx">
+      <DependentUpon>FormAutoSave.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="\\SOCRTWO-OFFICE\Users\Public\Documents\excelrecoverybackup\FormMain.resx">
+      <DependentUpon>FormMain.vb</DependentUpon>
+      <SubType>Designer</SubType>
+      <Link>Forms\FormMain.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormProgress.resx">
+      <DependentUpon>FormProgress.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Excel Recovery_TemporaryKey.pfx" />
+    <None Include="Misc\ChangeLog" />
+    <None Include="Misc\ClassDiagram1.cd" />
+    <None Include="My Project\app.manifest">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Misc\VERSION" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon1.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clipboard01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WordpadiconWindows7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="charticon.png" />
+    <Content Include="coffec.exe" />
+    <Content Include="doctotext.exe" />
+    <Content Include="Icon1.ico" />
+    <Content Include="Icon64X64.ico" />
+    <Content Include="Icon_open_file_2.png" />
+    <Content Include="Icon_open_file_96x96.png" />
+    <Content Include="libgcc_s_sjlj-1.dll" />
+    <Content Include="libglib-2.0-0.dll" />
+    <Content Include="libgobject-2.0-0.dll" />
+    <Content Include="libgsf-1-114.dll" />
+    <Content Include="libiconv-2.dll" />
+    <Content Include="libintl-8.dll" />
+    <Content Include="libxml2-2.dll" />
+    <Content Include="Misc\readme.txt" />
+    <None Include="Resources\btn_donateCC_LG2.png" />
+    <None Include="Resources\Folder64.png" />
+    <None Include="Resources\Folder64.jpg" />
+    <None Include="Resources\Extractlove128.jpg" />
+    <None Include="Resources\excel_2007.jpg" />
+    <None Include="Resources\Cimaware_ExcelFix.png" />
+    <None Include="Resources\reregister.png" />
+    <None Include="Resources\repairxml.png" />
+    <None Include="Resources\Kernel_Excel_Box.jpg" />
+    <None Include="Resources\OnlineRecovery.png" />
+    <None Include="Resources\Boite.png" />
+    <None Include="Resources\BSicon.png" />
+    <None Include="Resources\Calculator128.jpg" />
+    <None Include="Resources\Crystal_file_temporary.png" />
+    <None Include="Resources\excel_recovery_3.1.3_screenshot.png" />
+    <None Include="Resources\ExcelRecovery.jpg" />
+    <None Include="Resources\ExternalReference.jpg" />
+    <None Include="Resources\MBrepair.png" />
+    <None Include="Resources\Microsoft_Excel.png" />
+    <None Include="Resources\MicrosoftWord.png" />
+    <None Include="Resources\repair.png" />
+    <None Include="Resources\Safe_128.jpg" />
+    <None Include="Resources\word_2007.jpg" />
+    <None Include="Resources\wrench.png" />
+    <None Include="Resources\zipperrepair4.png" />
+    <None Include="Resources\Kernel_Excel_Box.png" />
+    <None Include="Resources\ExcelRecovery.png" />
+    <None Include="Resources\Icon_open_file_96x96.png" />
+    <None Include="Resources\saveIcon.png" />
+    <None Include="Resources\Icon_open_file_2.png" />
+    <None Include="Resources\viewicon.png" />
+    <None Include="Resources\charticon.png" />
+    <Content Include="Resources\Broom_icon.svg.png" />
+    <Content Include="Resources\Crystal_Clear_app_Startup_Wizard2.png" />
+    <None Include="Resources\Icon164X164.bmp" />
+    <Content Include="Resources\Icon64X64.bmp" />
+    <Content Include="Resources\offvis.png" />
+    <Content Include="Resources\Wizard_Hat_Icon.png" />
+    <Content Include="UnzDll.dll" />
+    <Content Include="zip.exe" />
+    <Content Include="ZipDll.dll" />
+    <Content Include="no-frills.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Code\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

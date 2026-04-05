@@ -1,0 +1,13 @@
+C:\Users\socrtwo\Desktop\excel_recovery\excel_recovery_3.1.3_source\Excel Recovery\bin\x86\Release\Resources\Icon1.ico
+C:\Users\socrtwo\Desktop\excel_recovery\excel_recovery_3.1.3_source\Excel Recovery\obj\x86\Release\Excel_Recovery.FormAutoSave.resources
+C:\Users\socrtwo\Desktop\excel_recovery\excel_recovery_3.1.3_source\Excel Recovery\obj\x86\Release\Excel_Recovery.FormMain.resources
+C:\Users\socrtwo\Desktop\excel_recovery\excel_recovery_3.1.3_source\Excel Recovery\obj\x86\Release\Excel_Recovery.FormProgress.resources
+C:\Users\socrtwo\Desktop\excel_recovery\excel_recovery_3.1.3_source\Excel Recovery\obj\x86\Release\Excel_Recovery.Resources.resources
+C:\Users\socrtwo\Desktop\excel_recovery\excel_recovery_3.1.3_source\Excel Recovery\obj\x86\Release\Excel Recovery.vbproj.GenerateResource.Cache
+C:\Users\socrtwo\Desktop\excel_recovery\excel_recovery_3.1.3_source\Excel Recovery\bin\x86\Release\S2 Recovery Tools for Microsoft Excel.exe.config
+C:\Users\socrtwo\Desktop\excel_recovery\excel_recovery_3.1.3_source\Excel Recovery\bin\x86\Release\S2 Recovery Tools for Microsoft Excel.exe
+C:\Users\socrtwo\Desktop\excel_recovery\excel_recovery_3.1.3_source\Excel Recovery\bin\x86\Release\S2 Recovery Tools for Microsoft Excel.pdb
+C:\Users\socrtwo\Desktop\excel_recovery\excel_recovery_3.1.3_source\Excel Recovery\bin\x86\Release\S2 Recovery Tools for Microsoft Excel.xml
+C:\Users\socrtwo\Desktop\excel_recovery\excel_recovery_3.1.3_source\Excel Recovery\obj\x86\Release\S2 Recovery Tools for Microsoft Excel.exe
+C:\Users\socrtwo\Desktop\excel_recovery\excel_recovery_3.1.3_source\Excel Recovery\obj\x86\Release\S2 Recovery Tools for Microsoft Excel.xml
+C:\Users\socrtwo\Desktop\excel_recovery\excel_recovery_3.1.3_source\Excel Recovery\obj\x86\Release\S2 Recovery Tools for Microsoft Excel.pdb
