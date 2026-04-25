@@ -1,5 +1,10 @@
 # S2 Recovery Tools for Microsoft Excel
 
+<!--PAGES_LINK_BANNER-->
+> 🌐 **Live page:** [https://socrtwo.github.io/corruptexcelrec-SF/](https://socrtwo.github.io/corruptexcelrec-SF/)  
+> 📦 **Releases:** [github.com/socrtwo/corruptexcelrec-SF/releases](https://github.com/socrtwo/corruptexcelrec-SF/releases)
+<!--/PAGES_LINK_BANNER-->
+
 Provides buttons for all Microsoft-recommended Excel file recovery methods plus 5 additional independent recovery techniques. Includes Vista/7/8 previous-version file recovery via Windows Shadow Copies.
 
 ## Screenshots
