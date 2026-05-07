@@ -1,4 +1,4 @@
-name: Build S2 Recovery Tools for Microsoft Excel
+name: Build
 
 on:
   push:
@@ -8,12 +8,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build with MSBuild
+  build-windows:
+    name: Native (Windows / VB.NET)
     runs-on: windows-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
@@ -29,12 +28,37 @@ jobs:
         run: msbuild "Excel Recovery.sln" /p:Configuration=Release /p:Platform="Any CPU" /m
         continue-on-error: true
 
-      - name: Upload build artifacts
+      - name: Upload native build
         uses: actions/upload-artifact@v4
-        if: success()
+        if: always()
         with:
-          name: build-output
+          name: native-windows
           path: |
             **/bin/Release/**
-            **/bin/Debug/**
           if-no-files-found: ignore
+
+  validate-pwa:
+    name: PWA (cross-platform web app)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate manifest
+        run: |
+          python3 -c "import json; json.load(open('web/manifest.webmanifest'))"
+          echo "manifest.webmanifest is valid JSON"
+
+      - name: Validate HTML/JS exist
+        run: |
+          test -f web/index.html
+          test -f web/app.js
+          test -f web/sw.js
+          test -f web/icons/icon-192.png
+          test -f web/icons/icon-512.png
+          echo "PWA shell present"
+
+      - name: Upload web bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: pwa-web
+          path: web/
