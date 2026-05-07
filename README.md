@@ -1,95 +1,135 @@
-<!--MODERNIZED:v1-->
-# Corruptexcelrec
+<!--MODERNIZED:v2-->
+# S2 Recovery Tools for Microsoft Excel
 
-> Migrated from SourceForge via SF2GH Migrator
+> Recover and repair corrupt `.xls` and `.xlsx` files. Now cross-platform.
 
-[![Live page](https://img.shields.io/badge/live-page-ff2e93?style=for-the-badge)](https://socrtwo.github.io/corruptexcelrec-SF/)
+[![Live app](https://img.shields.io/badge/live-app-ff2e93?style=for-the-badge)](https://socrtwo.github.io/corruptexcelrec-SF/)
 [![Releases](https://img.shields.io/github/v/release/socrtwo/corruptexcelrec-SF?style=for-the-badge&color=7c3aed)](https://github.com/socrtwo/corruptexcelrec-SF/releases)
-[![License](https://img.shields.io/github/license/socrtwo/corruptexcelrec-SF?style=for-the-badge&color=22d3ee)](https://github.com/socrtwo/corruptexcelrec-SF/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/socrtwo/corruptexcelrec-SF?style=for-the-badge&color=22d3ee)](LICENSE)
 [![Last commit](https://img.shields.io/github/last-commit/socrtwo/corruptexcelrec-SF?style=for-the-badge&color=34d399)](https://github.com/socrtwo/corruptexcelrec-SF/commits)
 
-🌐 **Live:** https://socrtwo.github.io/corruptexcelrec-SF/  
-📦 **Downloads:** [Releases](https://github.com/socrtwo/corruptexcelrec-SF/releases)  
+🌐 **Live:** https://socrtwo.github.io/corruptexcelrec-SF/
+📦 **Downloads:** [Latest release](https://github.com/socrtwo/corruptexcelrec-SF/releases/latest)
 📂 **Source:** [socrtwo/corruptexcelrec-SF](https://github.com/socrtwo/corruptexcelrec-SF)
 
 ---
 
-Provides buttons for all Microsoft-recommended Excel file recovery methods plus 5 additional independent recovery techniques. Includes Vista/7/8 previous-version file recovery via Windows Shadow Copies.
+This project ships **two** recovery tools that share a brand and lineage:
 
-## Screenshots
+1. **PWA recovery tool** (new) — runs in the browser on every modern OS, works
+   offline, never uploads files. The single codebase under `web/` powers all
+   cross-platform releases.
+2. **Native VB.NET WinForms tool** (classic) — Windows-only, uses Excel COM
+   Interop and bundled CLI utilities for the deepest recovery passes. Source
+   under `Excel Recovery/`.
 
-Visit the [SourceForge project page](https://sourceforge.net/projects/corruptexcelrec/) to view screenshots.
-
-> **Tip:** If you have screenshots to contribute, open a PR adding them to a `screenshots/` folder!
-
-**Language:** VB.NET / C#  
-**License:** MIT
-
-## Features
+## ✨ Features
 
 - All Microsoft-recommended Excel recovery methods in one interface
-- 5 additional independent recovery algorithms
-- Previous version file recovery (Windows Shadow Copies)
-- Works with both .xls and .xlsx formats
-- Simple one-click interface for each recovery method
+- Six strategies: Auto, Strict Read, Lenient XML Repair, ZIP Recovery,
+  Salvage Cells, Convert to CSV
+- Saves recovered workbooks as `.xlsx`, `.xls`, `.ods`, or `.csv`
+- 100% client-side: files never leave your device
+- Installable as a native-feeling app on every major platform
+- Offline-capable (service worker caches the entire app shell)
+- Drag-and-drop, file-picker, paste, or "Open with…" entry points
+- Native Windows build keeps the legacy Excel COM Interop recovery routines
+  for the most stubborn corruption cases
 
-## System Requirements
+## 📦 Install / Download
 
-- Windows 7 or later
-- Visual Studio 2010+ (Community edition works)
-- .NET Framework 4.0 or later
+| Platform | How to install |
+|----------|----------------|
+| 🪟 **Windows** | [Download `.zip`](https://github.com/socrtwo/corruptexcelrec-SF/releases/latest) · or visit the live URL in Edge/Chrome and click the address-bar install button. The classic native `.exe` is also available as `corruptexcelrec-windows-native.zip`. |
+| 🍎 **macOS** | [Download `.zip`](https://github.com/socrtwo/corruptexcelrec-SF/releases/latest) · or open the live URL in Safari → **File → Add to Dock**. |
+| 🐧 **Linux** | [Download `.tar.gz`](https://github.com/socrtwo/corruptexcelrec-SF/releases/latest) · or install via Chrome/Chromium/Firefox address bar. |
+| 🟢 **ChromeOS** | Open the live URL → ⋮ → **Install Excel Recovery**. Appears in launcher. |
+| 🤖 **Android** | Open the live URL in Chrome → ⋮ → **Install app**. Or build a signed APK with [PWABuilder](https://www.pwabuilder.com/). |
+| 📱 **iOS / iPadOS** | Open the live URL in Safari → **Share → Add to Home Screen**. |
+| 🌐 **Web** | Just visit https://socrtwo.github.io/corruptexcelrec-SF/. |
 
-## Installation & Usage
+Every release on the [Releases page](https://github.com/socrtwo/corruptexcelrec-SF/releases)
+ships one bundle per platform, plus shared release notes describing what's new.
 
-### Building from Source
+## 🛠 Building from source
 
-1. Open the `.sln` file in Visual Studio
-2. Restore NuGet packages if prompted
-3. Build the solution (**Build → Build Solution** or `Ctrl+Shift+B`)
-4. Find the compiled `.exe` in `bin/Release/`
+### PWA (cross-platform)
 
-### Using a Pre-built Release
+The PWA is plain HTML / JS — no build step. To work on it locally:
 
-Download the latest release from the [Releases](../../releases) page and run the `.exe` directly — no install needed.
+```bash
+cd web
+python3 -m http.server 8080
+# open http://localhost:8080
+```
 
-## Origin
+To produce all per-platform release bundles locally:
 
-This project was originally hosted on SourceForge and has been migrated to GitHub for easier access and collaboration.
+```bash
+bash scripts/build-releases.sh 5.0.0
+ls dist/
+```
 
-- **SourceForge:** [corruptexcelrec](https://sourceforge.net/projects/corruptexcelrec/)
-- **Migrated with:** [SF2GH Migrator](https://github.com/socrtwo/sf-to-github)
+### Native Windows build
 
-## Contributing
+Requires Windows + Visual Studio 2019+ (Community edition works) and
+.NET Framework 4.0+:
 
-Contributions are welcome! Feel free to:
+1. Open `Excel Recovery.sln` in Visual Studio.
+2. Restore NuGet packages if prompted.
+3. **Build → Build Solution** (`Ctrl+Shift+B`).
+4. Find the compiled `.exe` in `Excel Recovery/bin/Release/`.
 
-1. Fork this repository
-2. Create a feature branch (`git checkout -b my-feature`)
-3. Commit your changes (`git commit -m "Add my feature"`)
-4. Push to the branch (`git push origin my-feature`)
-5. Open a Pull Request
+CI builds the native binary automatically — see
+[`.github/workflows/build.yml`](.github/workflows/build.yml).
 
-## License
+## 🚀 Cutting a release
 
-MIT License — see [LICENSE](LICENSE) for details.
+Tag-driven, fully automated:
 
----
+```bash
+git tag v5.0.0
+git push origin v5.0.0
+```
+
+The [`release.yml`](.github/workflows/release.yml) workflow:
+
+1. Builds all 7 platform bundles via `scripts/build-releases.sh`.
+2. Builds the native Windows `.exe` on a Windows runner.
+3. Creates the GitHub Release and uploads every artifact.
+
+## 🔒 Privacy
+
+Files you open in the recovery tool are processed **entirely in your
+browser** using JSZip and SheetJS. Nothing is uploaded to any server.
+The PWA's only network traffic is fetching its own static assets (and even
+those are cached offline after first load).
 
 ## 📜 SourceForge heritage
 
-This project originated on **SourceForge** before being migrated to GitHub. The legacy SourceForge entry, if still available, can be searched at:
+This project originated on **SourceForge** before being migrated to GitHub.
 
 🔗 https://sourceforge.net/projects/corruptexcelrec/
 
-The repository here at `socrtwo/corruptexcelrec-SF` is the canonical, actively-maintained home. All future updates, issue tracking, and releases happen on GitHub.
+The repository here at [`socrtwo/corruptexcelrec-SF`](https://github.com/socrtwo/corruptexcelrec-SF)
+is the canonical, actively-maintained home. All future updates, issue
+tracking, and releases happen on GitHub.
 
-## 🛠️ Contributing
+## 🤝 Contributing
 
-Issues and pull requests are welcome at [https://github.com/socrtwo/corruptexcelrec-SF/issues](https://github.com/socrtwo/corruptexcelrec-SF/issues).
+Issues and pull requests are welcome at
+https://github.com/socrtwo/corruptexcelrec-SF/issues.
+
+```bash
+git checkout -b my-feature
+# hack hack hack
+git push -u origin my-feature
+# open a PR
+```
 
 ## 📝 License
 
-See the [LICENSE](https://github.com/socrtwo/corruptexcelrec-SF/blob/main/LICENSE) file in this repository. If no license file is present, the project is shared as-is for reference and personal use; please contact the maintainer for other use cases.
+MIT — see [LICENSE](LICENSE).
 
 ---
 

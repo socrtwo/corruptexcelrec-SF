@@ -4,171 +4,183 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0f0322">
-<title>Loading…</title>
+<meta name="description" content="Recover and repair corrupt Microsoft Excel (.xls / .xlsx) files in your browser. Free, open-source, installable on Windows, Mac, Linux, ChromeOS, Android, iOS.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Excel Recovery">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>S2 Recovery Tools for Microsoft Excel</title>
 <style>
-  :root { color-scheme: dark; }
+  :root { color-scheme: dark; --pink: #ff2e93; --purple: #7c3aed; --cyan: #22d3ee; --bg: #0f0322; --bg-deep: #08010f; --surface: rgba(20,10,40,0.55); --border: rgba(255,255,255,0.1); --text: #f5f3ff; --text-dim: rgba(245,243,255,0.7); --good: #34d399; --warn: #fbbf24; --bad: #f87171; }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { min-height: 100%; }
-  body {
-    font-family: 'Inter', -apple-system, system-ui, sans-serif;
-    background: radial-gradient(ellipse at top, #0f0322 0%, #08010f 70%);
-    color: #f5f3ff;
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.6;
-  }
+  body { font-family: 'Inter', -apple-system, system-ui, sans-serif; background: radial-gradient(ellipse at top, var(--bg) 0%, var(--bg-deep) 70%); color: var(--text); -webkit-font-smoothing: antialiased; line-height: 1.55; min-height: 100vh; }
   .orbs { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
-  .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.45; animation: float 18s ease-in-out infinite; }
-  .o1 { width: 480px; height: 480px; background: #ff2e93; top: -140px; left: -120px; }
-  .o2 { width: 420px; height: 420px; background: #7c3aed; bottom: -140px; right: -100px; animation-delay: -6s; }
-  .o3 { width: 360px; height: 360px; background: #22d3ee; top: 40%; left: 45%; opacity: 0.3; animation-delay: -12s; }
-  @keyframes float {
-    0%,100% { transform: translate(0,0) scale(1); }
-    33% { transform: translate(40px,-30px) scale(1.08); }
-    66% { transform: translate(-30px,30px) scale(.95); }
+  .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; animation: float 18s ease-in-out infinite; }
+  .o1 { width: 480px; height: 480px; background: var(--pink); top: -140px; left: -120px; }
+  .o2 { width: 420px; height: 420px; background: var(--purple); bottom: -140px; right: -100px; animation-delay: -6s; }
+  .o3 { width: 360px; height: 360px; background: var(--cyan); top: 40%; left: 45%; opacity: 0.25; animation-delay: -12s; }
+  @keyframes float { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(40px,-30px) scale(1.08); } 66% { transform: translate(-30px,30px) scale(.95); } }
+  .wrap { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; padding: 40px 20px 64px; }
+  header { margin-bottom: 28px; }
+  .badge { display: inline-block; padding: 4px 10px; border-radius: 999px; background: rgba(124,58,237,0.18); border: 1px solid rgba(124,58,237,0.4); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #d4baff; margin-bottom: 12px; }
+  h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; letter-spacing: -0.02em; background: linear-gradient(135deg, var(--pink) 0%, var(--cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 6px; }
+  header p { color: var(--text-dim); font-size: 1rem; max-width: 640px; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+  .links a, .links button { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; text-decoration: none; color: var(--text); background: rgba(20,10,40,0.6); border: 1px solid var(--border); border-radius: 999px; font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: transform .15s, border-color .15s, background .15s; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .links a:hover, .links button:hover { transform: translateY(-1px); border-color: var(--purple); background: rgba(124,58,237,0.18); }
+  .install-cta { background: linear-gradient(135deg, var(--pink), var(--purple)) !important; border-color: transparent !important; }
+  .card { padding: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4); box-shadow: 0 20px 60px rgba(0,0,0,0.4); margin-bottom: 20px; }
+  .card h2 { font-size: 1.2rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .card h2 .num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, var(--pink), var(--purple)); font-size: 0.85rem; font-weight: 700; }
+  .drop { border: 2px dashed rgba(255,255,255,0.18); border-radius: 14px; padding: 32px 20px; text-align: center; cursor: pointer; transition: border-color .15s, background .15s; }
+  .drop:hover, .drop.over { border-color: var(--cyan); background: rgba(34,211,238,0.08); }
+  .drop p { color: var(--text-dim); margin-top: 6px; font-size: 0.9rem; }
+  .drop strong { color: var(--text); font-size: 1rem; }
+  input[type=file] { display: none; }
+  .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 14px; }
+  .meta div { padding: 10px 12px; background: rgba(0,0,0,0.25); border: 1px solid var(--border); border-radius: 10px; }
+  .meta .k { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+  .meta .v { font-size: 0.95rem; font-weight: 600; word-break: break-all; }
+  .methods { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .method { padding: 14px; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: transform .15s, border-color .15s, background .15s; text-align: left; color: var(--text); font: inherit; }
+  .method:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--purple); background: rgba(124,58,237,0.12); }
+  .method:disabled { opacity: 0.45; cursor: not-allowed; }
+  .method h3 { font-size: 0.95rem; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+  .method p { font-size: 0.8rem; color: var(--text-dim); }
+  .method .tag { font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; background: rgba(34,211,238,0.2); color: #67e8f9; margin-left: auto; }
+  .log { max-height: 300px; overflow-y: auto; padding: 12px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 10px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.82rem; }
+  .log .entry { padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; gap: 10px; }
+  .log .entry:last-child { border-bottom: none; }
+  .log .ts { color: var(--text-dim); flex-shrink: 0; }
+  .log .ok { color: var(--good); }
+  .log .warn { color: var(--warn); }
+  .log .err { color: var(--bad); }
+  .log .info { color: var(--cyan); }
+  .log .empty { color: var(--text-dim); font-style: italic; text-align: center; padding: 20px; }
+  .preview { max-height: 320px; overflow: auto; border: 1px solid var(--border); border-radius: 10px; }
+  .preview table { border-collapse: collapse; width: 100%; font-size: 0.82rem; }
+  .preview th, .preview td { padding: 6px 10px; border: 1px solid rgba(255,255,255,0.06); white-space: nowrap; max-width: 240px; overflow: hidden; text-overflow: ellipsis; }
+  .preview th { background: rgba(124,58,237,0.18); position: sticky; top: 0; font-weight: 600; }
+  .sheet-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .sheet-tabs button { padding: 6px 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font: inherit; font-size: 0.82rem; cursor: pointer; }
+  .sheet-tabs button.active { background: linear-gradient(135deg, var(--pink), var(--purple)); border-color: transparent; }
+  .download-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .download-row a, .download-row button { padding: 10px 16px; border-radius: 10px; text-decoration: none; color: var(--text); border: 1px solid var(--border); background: rgba(0,0,0,0.3); font: inherit; cursor: pointer; font-size: 0.9rem; font-weight: 600; }
+  .download-row a.primary, .download-row button.primary { background: linear-gradient(135deg, var(--pink), var(--purple)); border-color: transparent; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 999px; font-size: 0.72rem; font-weight: 600; background: rgba(0,0,0,0.3); border: 1px solid var(--border); }
+  .pill.good { background: rgba(52,211,153,0.18); border-color: rgba(52,211,153,0.4); color: #6ee7b7; }
+  .pill.warn { background: rgba(251,191,36,0.18); border-color: rgba(251,191,36,0.4); color: #fcd34d; }
+  .pill.bad { background: rgba(248,113,113,0.18); border-color: rgba(248,113,113,0.4); color: #fca5a5; }
+  .platforms { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 12px; }
+  .plat { padding: 14px; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 12px; }
+  .plat h3 { font-size: 0.95rem; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .plat p { font-size: 0.78rem; color: var(--text-dim); margin-bottom: 8px; }
+  .plat a { color: var(--cyan); text-decoration: none; font-size: 0.82rem; font-weight: 600; }
+  .plat a:hover { text-decoration: underline; }
+  details { margin-top: 12px; padding: 10px 14px; background: rgba(0,0,0,0.25); border: 1px solid var(--border); border-radius: 10px; }
+  details summary { cursor: pointer; font-weight: 600; font-size: 0.9rem; }
+  details[open] summary { margin-bottom: 8px; }
+  .hidden { display: none !important; }
+  footer { margin-top: 32px; text-align: center; color: rgba(245,243,255,0.5); font-size: 0.82rem; }
+  footer a { color: rgba(245,243,255,0.7); }
+  .offline-banner { background: rgba(251,191,36,0.18); border: 1px solid rgba(251,191,36,0.4); color: #fcd34d; padding: 8px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 0.85rem; text-align: center; }
+  @media (max-width: 600px) {
+    .wrap { padding: 24px 14px 48px; }
+    .card { padding: 18px; }
   }
-  .wrap {
-    position: relative; z-index: 1;
-    max-width: 760px; margin: 0 auto; padding: 56px 24px 80px;
-  }
-  header { margin-bottom: 36px; }
-  h1#title {
-    font-size: 2.6rem; font-weight: 800; letter-spacing: -0.02em;
-    background: linear-gradient(135deg, #ff2e93 0%, #22d3ee 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    margin-bottom: 6px;
-  }
-  p#desc { color: rgba(245,243,255,0.7); font-size: 1.05rem; }
-  .links {
-    display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 32px;
-  }
-  .links a {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 10px 16px; text-decoration: none; color: #f5f3ff;
-    background: rgba(20,10,40,0.6); border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 999px; font-size: 0.9rem; font-weight: 600;
-    transition: transform .15s, border-color .15s, background .15s;
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  }
-  .links a:hover { transform: translateY(-1px); border-color: #7c3aed; background: rgba(124,58,237,0.18); }
-  .card {
-    padding: 32px 28px;
-    background: rgba(20,10,40,0.55);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 22px;
-    backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-  }
-  .card h1, .card h2, .card h3, .card h4 { margin: 1.4em 0 0.5em; line-height: 1.25; }
-  .card h1:first-child, .card h2:first-child { margin-top: 0; }
-  .card h1 { font-size: 1.7rem; }
-  .card h2 { font-size: 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px; }
-  .card h3 { font-size: 1.15rem; color: rgba(245,243,255,0.9); }
-  .card p, .card ul, .card ol { margin: 0.6em 0; color: rgba(245,243,255,0.85); }
-  .card a { color: #22d3ee; text-decoration: none; }
-  .card a:hover { text-decoration: underline; }
-  .card code {
-    background: rgba(255,46,147,0.15); color: #ffd166;
-    padding: 2px 6px; border-radius: 5px; font-size: 0.92em;
-    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-  }
-  .card pre {
-    background: rgba(0,0,0,0.4); padding: 14px 16px; border-radius: 10px;
-    overflow-x: auto; border: 1px solid rgba(255,255,255,0.06);
-  }
-  .card pre code { background: none; color: #e5e7eb; padding: 0; }
-  .card ul, .card ol { padding-left: 1.6em; }
-  .card li { margin: 0.25em 0; }
-  .card blockquote {
-    margin: 0.8em 0; padding: 8px 16px;
-    border-left: 3px solid #7c3aed; color: rgba(245,243,255,0.7);
-  }
-  .card img { max-width: 100%; height: auto; border-radius: 8px; }
-  .card table { border-collapse: collapse; margin: 0.8em 0; }
-  .card th, .card td { padding: 6px 12px; border: 1px solid rgba(255,255,255,0.1); }
-  .card hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 1.4em 0; }
-  footer { margin-top: 32px; text-align: center; color: rgba(245,243,255,0.4); font-size: 0.82rem; }
-  footer a { color: rgba(245,243,255,0.6); }
-  .loading { color: rgba(245,243,255,0.5); font-style: italic; }
 </style>
 </head>
 <body>
 <div class="orbs" aria-hidden="true">
   <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
 </div>
+
 <div class="wrap">
   <header>
-    <h1 id="title">Loading…</h1>
-    <p id="desc"></p>
-    <nav class="links" id="links"></nav>
+    <span class="badge">Free · Open-source · Runs offline</span>
+    <h1>S2 Recovery Tools for Microsoft Excel</h1>
+    <p>Recover and repair corrupt <code>.xlsx</code> and <code>.xls</code> files entirely in your browser. No upload, no install required &mdash; though you <em>can</em> install it as a native app on any platform.</p>
+    <nav class="links">
+      <button id="btn-install" class="install-cta hidden">⬇  Install app</button>
+      <a href="https://github.com/socrtwo/corruptexcelrec-SF" target="_blank" rel="noopener">📂  Source</a>
+      <a href="https://github.com/socrtwo/corruptexcelrec-SF/releases" target="_blank" rel="noopener">🚀  Releases</a>
+      <a href="https://github.com/socrtwo/corruptexcelrec-SF/issues" target="_blank" rel="noopener">💬  Issues</a>
+    </nav>
+    <div id="offline" class="offline-banner hidden">⚠ You're offline &mdash; the app keeps working from cache.</div>
   </header>
-  <main class="card" id="readme">
-    <p class="loading">Fetching README…</p>
-  </main>
+
+  <section class="card">
+    <h2><span class="num">1</span> Open a file</h2>
+    <label class="drop" id="drop">
+      <input type="file" id="file" accept=".xlsx,.xlsm,.xltx,.xltm,.xls,.xlsb,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
+      <strong>Click to choose, drag &amp; drop, or paste</strong>
+      <p>Supports <code>.xlsx</code>, <code>.xlsm</code>, <code>.xls</code>, <code>.xlsb</code>. Files never leave your device.</p>
+    </label>
+    <div class="meta hidden" id="meta">
+      <div><div class="k">Name</div><div class="v" id="m-name">—</div></div>
+      <div><div class="k">Size</div><div class="v" id="m-size">—</div></div>
+      <div><div class="k">Format</div><div class="v" id="m-format">—</div></div>
+      <div><div class="k">Status</div><div class="v" id="m-status">—</div></div>
+    </div>
+    <div class="pill-row hidden" id="pills"></div>
+  </section>
+
+  <section class="card hidden" id="section-recover">
+    <h2><span class="num">2</span> Pick a recovery method</h2>
+    <p style="color:var(--text-dim); font-size:0.88rem; margin-bottom:14px;">Each method tries a different strategy. Start with the safest (Auto) &mdash; if it fails, try the more aggressive ones.</p>
+    <div class="methods" id="methods"></div>
+  </section>
+
+  <section class="card hidden" id="section-result">
+    <h2><span class="num">3</span> Results</h2>
+    <div id="sheet-tabs" class="sheet-tabs"></div>
+    <div class="preview" id="preview"></div>
+    <div class="download-row" id="downloads"></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">📋</span> Activity log</h2>
+    <div class="log" id="log"><div class="empty">Open a file to begin.</div></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">🌐</span> Install on your platform</h2>
+    <p style="color:var(--text-dim); font-size:0.88rem;">This is a Progressive Web App &mdash; one codebase, every platform. Pick yours:</p>
+    <div class="platforms">
+      <div class="plat"><h3>🪟 Windows</h3><p>Click the install button (⬇) in your browser's address bar, or use the native installer.</p><a href="https://github.com/socrtwo/corruptexcelrec-SF/releases/latest" target="_blank">Download .zip / .exe</a></div>
+      <div class="plat"><h3>🍎 macOS</h3><p>In Safari: File → Add to Dock. Or in Chrome/Edge: install from address bar.</p><a href="https://github.com/socrtwo/corruptexcelrec-SF/releases/latest" target="_blank">Download .zip launcher</a></div>
+      <div class="plat"><h3>🐧 Linux</h3><p>In Chrome / Chromium / Firefox: install from address bar.</p><a href="https://github.com/socrtwo/corruptexcelrec-SF/releases/latest" target="_blank">Download .tar.gz</a></div>
+      <div class="plat"><h3>🟢 ChromeOS</h3><p>Open in Chrome, then ⋮ → Install. Appears in the launcher.</p><a href="https://github.com/socrtwo/corruptexcelrec-SF/releases/latest" target="_blank">Download bundle</a></div>
+      <div class="plat"><h3>🤖 Android</h3><p>In Chrome: ⋮ → Install app, or "Add to Home screen".</p><a href="https://github.com/socrtwo/corruptexcelrec-SF/releases/latest" target="_blank">Download bundle</a></div>
+      <div class="plat"><h3>📱 iOS / iPadOS</h3><p>In Safari: Share → Add to Home Screen.</p><a href="https://github.com/socrtwo/corruptexcelrec-SF/releases/latest" target="_blank">Download bundle</a></div>
+      <div class="plat"><h3>🌐 Web</h3><p>You're already using it.</p><a href="https://socrtwo.github.io/corruptexcelrec-SF/" target="_blank">Open hosted version</a></div>
+    </div>
+  </section>
+
+  <details>
+    <summary>About the recovery methods</summary>
+    <div style="margin-top:8px; font-size:0.88rem; color:var(--text-dim);">
+      <p><strong>Auto Repair</strong> &mdash; tries each method in order, returns the first that produces readable data.</p>
+      <p><strong>Strict Read</strong> &mdash; opens the file with strict XML parsing. Confirms the file is actually corrupt.</p>
+      <p><strong>Lenient XML Repair</strong> &mdash; rewrites broken XML inside the .xlsx ZIP using lax parsing.</p>
+      <p><strong>ZIP Recovery</strong> &mdash; rebuilds the ZIP container itself when the file's ZIP structure is damaged.</p>
+      <p><strong>Salvage Cells</strong> &mdash; ignores formatting and pulls every readable cell value into a fresh workbook.</p>
+      <p><strong>Convert to CSV</strong> &mdash; for the most damaged files: extracts whatever cells can be read into a CSV.</p>
+    </div>
+  </details>
+
   <footer>
-    <p><a id="src" href="#">View source on GitHub</a></p>
+    <p><a href="https://github.com/socrtwo/corruptexcelrec-SF" target="_blank">socrtwo/corruptexcelrec-SF</a> · MIT License · Originally migrated from <a href="https://sourceforge.net/projects/corruptexcelrec/" target="_blank">SourceForge</a></p>
   </footer>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
-<script>
-(async function () {
-  const path = location.pathname.replace(/\/$/, '').split('/');
-  const owner = path[1] === '' ? 'socrtwo' : (window.GH_OWNER || 'socrtwo');
-  // Path on Pages is /<repo>/[version]/. Repo is the second segment.
-  const repo = path[1] || (location.hostname.split('.')[0]);
 
-  document.title = repo;
-  document.getElementById('title').textContent = repo;
-
-  const repoUrl = `https://github.com/${owner}/${repo}`;
-  document.getElementById('src').href = repoUrl;
-
-  // Fetch repo metadata (description) and README in parallel
-  const headers = { 'Accept': 'application/vnd.github+json' };
-  try {
-    const meta = await fetch(`https://api.github.com/repos/${owner}/${repo}`, { headers }).then(r => r.json());
-    if (meta && meta.description) document.getElementById('desc').textContent = meta.description;
-
-    const links = document.getElementById('links');
-    const mk = (href, label, emoji) => {
-      const a = document.createElement('a');
-      a.href = href; a.target = '_blank'; a.rel = 'noopener';
-      a.textContent = (emoji ? emoji + '  ' : '') + label;
-      links.appendChild(a);
-    };
-    mk(repoUrl, 'Source', '📂');
-    mk(repoUrl + '/releases', 'Releases', '⬇');
-    mk(repoUrl + '/issues', 'Issues', '💬');
-  } catch (e) { /* ignore */ }
-
-  // README — try a few branches & casings
-  const branches = ['main', 'master'];
-  const names = ['README.md', 'readme.md', 'README.MD', 'Readme.md'];
-  let md = null;
-  for (const b of branches) {
-    for (const n of names) {
-      const url = `https://raw.githubusercontent.com/${owner}/${repo}/${b}/${n}`;
-      try {
-        const r = await fetch(url);
-        if (r.ok) { md = await r.text(); break; }
-      } catch (e) {}
-    }
-    if (md) break;
-  }
-
-  const readmeEl = document.getElementById('readme');
-  if (md) {
-    marked.setOptions({ breaks: false, gfm: true });
-    readmeEl.innerHTML = marked.parse(md);
-    // make all README links open in new tab
-    readmeEl.querySelectorAll('a').forEach(a => {
-      if (a.href && !a.href.startsWith(location.origin)) {
-        a.target = '_blank'; a.rel = 'noopener';
-      }
-    });
-  } else {
-    readmeEl.innerHTML = '<p class="loading">No README found in this repository.</p>';
-  }
-})();
-</script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

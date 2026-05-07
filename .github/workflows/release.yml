@@ -1,0 +1,90 @@
+name: Release (multi-platform)
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag (e.g. v5.0.0)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  bundle:
+    name: Build per-platform bundles
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.ver.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: ver
+        run: |
+          if [ -n "${{ github.event.inputs.tag }}" ]; then
+            TAG="${{ github.event.inputs.tag }}"
+          else
+            TAG="${GITHUB_REF#refs/tags/}"
+          fi
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Build all platform bundles
+        run: bash scripts/build-releases.sh "${{ steps.ver.outputs.version }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-bundles
+          path: dist/
+
+  build-windows-native:
+    name: Build Windows native .exe
+    runs-on: windows-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: microsoft/setup-msbuild@v2
+      - uses: NuGet/setup-nuget@v2
+      - run: nuget restore "Excel Recovery.sln"
+        continue-on-error: true
+      - run: msbuild "Excel Recovery.sln" /p:Configuration=Release /p:Platform="Any CPU" /m
+        continue-on-error: true
+      - name: Package native build
+        shell: bash
+        run: |
+          mkdir -p windows-native
+          if [ -d "Excel Recovery/bin/Release" ]; then
+            cp -r "Excel Recovery/bin/Release/." windows-native/ || true
+          fi
+          if [ -d "windows-native" ] && [ "$(ls -A windows-native 2>/dev/null)" ]; then
+            cd windows-native && 7z a "../corruptexcelrec-windows-native.zip" .
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-native
+          path: corruptexcelrec-windows-native.zip
+          if-no-files-found: ignore
+
+  publish:
+    name: Publish GitHub Release
+    runs-on: ubuntu-latest
+    needs: [bundle, build-windows-native]
+    if: always() && needs.bundle.result == 'success'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { name: release-bundles, path: dist/ }
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with: { name: windows-native, path: dist/ }
+      - name: Create / update release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="v${{ needs.bundle.outputs.version }}"
+          gh release view "$TAG" >/dev/null 2>&1 || \
+            gh release create "$TAG" --title "$TAG" --notes-file dist/RELEASE_NOTES.md
+          gh release upload "$TAG" dist/*.zip dist/*.tar.gz dist/*.AppImage 2>/dev/null --clobber || true
