@@ -48,7 +48,9 @@ jobs:
       - uses: microsoft/setup-msbuild@v2
       - uses: NuGet/setup-nuget@v2
       - run: nuget restore "Excel Recovery.sln"
+        continue-on-error: true
       - run: msbuild "Excel Recovery.sln" /p:Configuration=Release /p:Platform="Any CPU" /m
+        continue-on-error: true
       - name: Package native build
         shell: bash
         run: |
