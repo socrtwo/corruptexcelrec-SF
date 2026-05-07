@@ -106,16 +106,19 @@
       return out;
     }
     if (format === 'xlsx') {
-      try {
-        const z = await JSZip.loadAsync(bytes);
-        const names = Object.keys(z.files);
-        out.push({ level: 'good', text: `${names.length} entries in ZIP` });
-        if (!names.includes('[Content_Types].xml')) out.push({ level: 'bad', text: 'Missing [Content_Types].xml' });
-        if (!names.some(n => n.startsWith('xl/worksheets/'))) out.push({ level: 'bad', text: 'No worksheets/' });
-        if (!names.some(n => n === 'xl/workbook.xml')) out.push({ level: 'warn', text: 'Missing xl/workbook.xml' });
-      } catch (e) {
+      // Use the fault-tolerant unzipper for diagnosis — JSZip rejects truncated
+      // central directories outright, which is exactly the failure we recover from.
+      const { files, stats } = unzipImmortal(bytes);
+      const names = Object.keys(files);
+      if (!names.length) {
         out.push({ level: 'bad', text: 'ZIP container damaged' });
+        return out;
       }
+      out.push({ level: 'good', text: `${names.length} entries recovered` });
+      if (stats.partial) out.push({ level: 'warn', text: `${stats.partial} partial` });
+      if (!names.includes('[Content_Types].xml')) out.push({ level: 'bad', text: 'Missing [Content_Types].xml' });
+      if (!names.some(n => n.startsWith('xl/worksheets/'))) out.push({ level: 'bad', text: 'No worksheets/' });
+      if (!names.some(n => n === 'xl/workbook.xml')) out.push({ level: 'warn', text: 'Missing xl/workbook.xml' });
     } else if (format === 'xls') {
       out.push({ level: 'good', text: 'OLE2 container present' });
     }
@@ -180,25 +183,32 @@
       warn('Lenient XML only applies to .xlsx — falling back to standard read.');
       return XLSX.read(state.bytes, { type: 'array' });
     }
-    const z = await JSZip.loadAsync(state.bytes);
-    let fixed = 0;
-    const names = Object.keys(z.files);
-    for (const name of names) {
-      if (!name.endsWith('.xml') && !name.endsWith('.rels')) continue;
-      const file = z.files[name];
-      if (file.dir) continue;
-      let txt = await file.async('string');
-      const before = txt;
-      txt = txt
-        .replace(/&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)/g, '&amp;')
-        .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '');
-      if (!/^<\?xml/.test(txt)) txt = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n' + txt;
-      if (txt !== before) {
-        z.file(name, txt);
-        fixed++;
+    // Decode with the Immortal unzipper so we don't choke on a damaged central
+    // directory. Then heal each XML entry, then rebuild via JSZip (output
+    // ZIP is well-formed).
+    const { files, stats } = unzipImmortal(state.bytes, { onLog: (lvl, m) => lvl === 'warn' ? warn(m) : null });
+    info(`Immortal unzip recovered ${stats.recovered} entry/entries (${stats.partial} partial)`);
+    if (!Object.keys(files).length) throw new Error('No files recoverable from ZIP container');
+
+    const dec = new TextDecoder('utf-8', { fatal: false });
+    const enc = new TextEncoder();
+    const z = new JSZip();
+    let healed = 0;
+    for (const [name, data] of Object.entries(files)) {
+      if (name.endsWith('.xml') || name.endsWith('.rels')) {
+        let txt = dec.decode(data);
+        const before = txt;
+        txt = txt
+          .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '')
+          .replace(/&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)/g, '&amp;');
+        if (!/^<\?xml/.test(txt)) txt = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n' + txt;
+        if (txt !== before) healed++;
+        z.file(name, enc.encode(txt));
+      } else {
+        z.file(name, data);
       }
     }
-    if (fixed) ok(`Cleaned XML in ${fixed} file(s)`);
+    if (healed) ok(`Cleaned XML in ${healed} file(s)`);
     const out = await z.generateAsync({ type: 'uint8array', compression: 'DEFLATE' });
     state.repairedBlob = new Blob([out], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     return XLSX.read(out, { type: 'array' });
@@ -206,34 +216,17 @@
 
   async function runZipRecovery() {
     if (state.format !== 'xlsx') throw new Error('ZIP recovery only applies to .xlsx');
-    const bytes = state.bytes;
-    const sigLocal = [0x50, 0x4B, 0x03, 0x04];
-    const entries = [];
-    for (let i = 0; i < bytes.length - 30; i++) {
-      if (bytes[i] === sigLocal[0] && bytes[i+1] === sigLocal[1] && bytes[i+2] === sigLocal[2] && bytes[i+3] === sigLocal[3]) {
-        entries.push(i);
-      }
-    }
-    info(`Scanned ZIP — ${entries.length} local headers found`);
+    // Pure Immortal Inflater path — works even when JSZip refuses to load the
+    // file (truncated central directory, bad CRCs, damaged DEFLATE blocks).
+    const { files, stats } = unzipImmortal(state.bytes, {
+      onLog: (lvl, m) => lvl === 'warn' ? warn(m) : info(m),
+    });
+    info(`Scanned ZIP — ${stats.scanned} local headers, ${stats.recovered} recovered (${stats.partial} partial), ${stats.skipped} skipped`);
+    if (!stats.recovered) throw new Error('No files could be recovered from the ZIP');
+
     const z = new JSZip();
-    let recovered = 0;
-    try {
-      const partial = await JSZip.loadAsync(bytes, { checkCRC32: false, createFolders: true });
-      for (const name of Object.keys(partial.files)) {
-        if (partial.files[name].dir) continue;
-        try {
-          const data = await partial.files[name].async('uint8array');
-          z.file(name, data);
-          recovered++;
-        } catch (e) {
-          warn(`Skipped damaged entry: ${name}`);
-        }
-      }
-    } catch (e) {
-      warn(`Direct ZIP load failed (${e.message}); using raw scan`);
-    }
-    if (!recovered) throw new Error('No files could be recovered from the ZIP');
-    ok(`Rebuilt ZIP with ${recovered} entry/entries`);
+    for (const [name, data] of Object.entries(files)) z.file(name, data);
+    ok(`Rebuilt ZIP with ${stats.recovered} entry/entries`);
     const out = await z.generateAsync({ type: 'uint8array', compression: 'DEFLATE' });
     state.repairedBlob = new Blob([out], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     return XLSX.read(out, { type: 'array' });

@@ -168,7 +168,7 @@
       <p><strong>Auto Repair</strong> &mdash; tries each method in order, returns the first that produces readable data.</p>
       <p><strong>Strict Read</strong> &mdash; opens the file with strict XML parsing. Confirms the file is actually corrupt.</p>
       <p><strong>Lenient XML Repair</strong> &mdash; rewrites broken XML inside the .xlsx ZIP using lax parsing.</p>
-      <p><strong>ZIP Recovery</strong> &mdash; rebuilds the ZIP container itself when the file's ZIP structure is damaged.</p>
+      <p><strong>ZIP Recovery</strong> &mdash; rebuilds the ZIP container itself when the file's ZIP structure is damaged. Uses the <a href="https://github.com/socrtwo/Universal-File-Repair-Tool" target="_blank" rel="noopener">Immortal Inflater</a> &mdash; a fault-tolerant DEFLATE decoder that walks past truncated/damaged blocks instead of giving up.</p>
       <p><strong>Salvage Cells</strong> &mdash; ignores formatting and pulls every readable cell value into a fresh workbook.</p>
       <p><strong>Convert to CSV</strong> &mdash; for the most damaged files: extracts whatever cells can be read into a CSV.</p>
     </div>
@@ -181,6 +181,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="immortal-inflate.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
