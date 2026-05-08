@@ -12,7 +12,7 @@
     <AssemblyName>S2 Recovery Tools for Microsoft Excel</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>
     <OptionStrict>Off</OptionStrict>
@@ -122,10 +122,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Office.Interop.Excel">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.16.0.18925.20022\lib\net40\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\..\..\..\..\..\..\Programs\Microsoft Visual Studio 10.0\Visual Studio Tools for Office\PIA\Office12\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -148,14 +148,12 @@
     <Compile Include="Forms\FormAutoSave.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="\\SOCRTWO-OFFICE\Users\Public\Documents\excelrecoverybackup\FormMain.vb">
+    <Compile Include="Forms\FormMain.vb">
       <SubType>Form</SubType>
-      <Link>Forms\FormMain.vb</Link>
     </Compile>
-    <Compile Include="\\SOCRTWO-OFFICE\Users\Public\Documents\excelrecoverybackup\FormMain.Designer.vb">
+    <Compile Include="Forms\FormMain.Designer.vb">
       <DependentUpon>FormMain.vb</DependentUpon>
       <SubType>Form</SubType>
-      <Link>Forms\FormMain.Designer.vb</Link>
     </Compile>
     <Compile Include="Forms\FormProgress.designer.vb">
       <DependentUpon>FormProgress.vb</DependentUpon>
@@ -184,10 +182,9 @@
       <DependentUpon>FormAutoSave.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="\\SOCRTWO-OFFICE\Users\Public\Documents\excelrecoverybackup\FormMain.resx">
+    <EmbeddedResource Include="Forms\FormMain.resx">
       <DependentUpon>FormMain.vb</DependentUpon>
       <SubType>Designer</SubType>
-      <Link>Forms\FormMain.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormProgress.resx">
       <DependentUpon>FormProgress.vb</DependentUpon>
@@ -201,6 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Excel Recovery_TemporaryKey.pfx" />
     <None Include="Misc\ChangeLog" />
     <None Include="Misc\ClassDiagram1.cd" />
