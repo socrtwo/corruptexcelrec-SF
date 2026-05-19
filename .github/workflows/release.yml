@@ -5,9 +5,10 @@ on:
     tags: ['v*']
   workflow_dispatch:
     inputs:
-      tag:
-        description: 'Tag (e.g. v5.0.0)'
-        required: true
+      ref:
+        description: 'Tag or ref to release (e.g. vV5.1.3). Leave empty to use the triggering ref.'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -18,16 +19,16 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.ver.outputs.version }}
+      tag: ${{ steps.ver.outputs.tag }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref || github.ref }}
 
       - id: ver
+        shell: bash
         run: |
-          if [ -n "${{ github.event.inputs.tag }}" ]; then
-            TAG="${{ github.event.inputs.tag }}"
-          else
-            TAG="${GITHUB_REF#refs/tags/}"
-          fi
+          TAG="${{ github.event.inputs.ref || github.ref_name }}"
           echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
 
@@ -45,19 +46,40 @@ jobs:
     continue-on-error: true
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref || github.ref }}
       - uses: microsoft/setup-msbuild@v2
       - uses: NuGet/setup-nuget@v2
       - run: nuget restore "Excel Recovery.sln"
         continue-on-error: true
       - run: msbuild "Excel Recovery.sln" /p:Configuration=Release /p:Platform="Any CPU" /m
         continue-on-error: true
-      - name: Package native build
+      - name: Stage native build
         shell: bash
         run: |
           mkdir -p windows-native
           if [ -d "Excel Recovery/bin/Release" ]; then
             cp -r "Excel Recovery/bin/Release/." windows-native/ || true
           fi
+      - name: Sign Windows binaries (Azure Trusted Signing)
+        if: hashFiles('windows-native/**/*.exe', 'windows-native/**/*.dll', 'windows-native/**/*.msi') != ''
+        uses: azure/trusted-signing-action@v0.5.1
+        with:
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          endpoint: ${{ secrets.AZURE_TRUSTED_SIGNING_ENDPOINT }}
+          trusted-signing-account-name: ${{ secrets.AZURE_TRUSTED_SIGNING_ACCOUNT }}
+          certificate-profile-name: ${{ secrets.AZURE_TRUSTED_SIGNING_PROFILE }}
+          files-folder: windows-native
+          files-folder-filter: exe,msi,dll
+          files-folder-recurse: true
+          file-digest: SHA256
+          timestamp-rfc3161: http://timestamp.acs.microsoft.com
+          timestamp-digest: SHA256
+      - name: Package native build
+        shell: bash
+        run: |
           if [ -d "windows-native" ] && [ "$(ls -A windows-native 2>/dev/null)" ]; then
             cd windows-native && 7z a "../corruptexcelrec-windows-native.zip" .
           fi
@@ -75,6 +97,8 @@ jobs:
     if: always() && needs.bundle.result == 'success'
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref || github.ref }}
       - uses: actions/download-artifact@v4
         with: { name: release-bundles, path: dist/ }
       - uses: actions/download-artifact@v4
@@ -84,7 +108,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG="v${{ needs.bundle.outputs.version }}"
+          TAG="${{ needs.bundle.outputs.tag }}"
           gh release view "$TAG" >/dev/null 2>&1 || \
             gh release create "$TAG" --title "$TAG" --notes-file dist/RELEASE_NOTES.md
           gh release upload "$TAG" dist/*.zip dist/*.tar.gz dist/*.AppImage 2>/dev/null --clobber || true
