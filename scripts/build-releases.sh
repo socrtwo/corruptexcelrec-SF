@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # build-releases.sh — produce per-platform release bundles for the PWA.
 # Usage:  bash scripts/build-releases.sh <version>
+#         bash scripts/build-releases.sh v5.1.4   (a leading "v"/"V" is accepted)
 #
 # Output: dist/corruptexcelrec-<platform>-v<version>.{zip,tar.gz}
+#         dist/SHA256SUMS
 #         dist/RELEASE_NOTES.md
 #
 # Each bundle contains:
@@ -15,7 +17,16 @@
 
 set -euo pipefail
 
-VERSION="${1:-0.0.0}"
+# Normalize the version: callers may pass "5.1.4", "v5.1.4" or even "vV5.1.3".
+# Strip every leading v/V so the emitted file names are always
+# corruptexcelrec-<platform>-v<version> with exactly one "v".
+RAW_VERSION="${1:-0.0.0}"
+VERSION="$RAW_VERSION"
+while [[ "$VERSION" == [vV]* ]]; do
+  VERSION="${VERSION#[vV]}"
+done
+[ -n "$VERSION" ] || VERSION="0.0.0"
+
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DIST="$ROOT/dist"
 WEB="$ROOT/web"
@@ -284,9 +295,14 @@ EOF
 pkg_zip "corruptexcelrec-web-v$VERSION" "$S"
 
 # ----------------------------------------------------------------------
-# Cleanup + release notes
+# Cleanup + checksums + release notes
 # ----------------------------------------------------------------------
 rm -rf "$DIST/_stage"
+
+# Generate SHA-256 checksums for every bundle so downloads can be verified.
+echo "▶ SHA256SUMS"
+( cd "$DIST" && sha256sum *.zip *.tar.gz 2>/dev/null > SHA256SUMS )
+cat "$DIST/SHA256SUMS"
 
 cat > "$DIST/RELEASE_NOTES.md" <<EOF
 # S2 Recovery Tools for Microsoft Excel — v$VERSION
@@ -307,6 +323,8 @@ are also published where the platform supports them.
 | 🤖 Android           | \`corruptexcelrec-android-v$VERSION.zip\`         | PWA + APK build instructions |
 | 📱 iOS / iPadOS      | \`corruptexcelrec-ios-v$VERSION.zip\`             | PWA + iOS install instructions |
 | 🌐 Web (hosted)      | \`corruptexcelrec-web-v$VERSION.zip\`             | PWA static site for self-hosting |
+
+Verify any download against \`SHA256SUMS\` (e.g. \`sha256sum -c SHA256SUMS\`).
 
 The hosted web app lives at <https://socrtwo.github.io/corruptexcelrec-SF/> —
 on every supported platform you can install it directly from your browser
