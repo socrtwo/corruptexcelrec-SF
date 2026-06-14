@@ -27,6 +27,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   bundle:
@@ -69,6 +70,7 @@ jobs:
   build-windows-native:
     name: Build Windows native .exe (best effort)
     runs-on: windows-latest
+    environment: release
     continue-on-error: true
     steps:
       - uses: actions/checkout@v4
@@ -78,6 +80,26 @@ jobs:
         continue-on-error: true
       - run: msbuild "Excel Recovery.sln" /p:Configuration=Release /p:Platform="Any CPU" /m
         continue-on-error: true
+      - name: Azure login (OIDC, no stored secret)
+        if: vars.AZURE_TENANT_ID != ''
+        uses: azure/login@v2
+        with:
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      - name: Sign Windows binaries with Azure Trusted Signing
+        if: vars.AZURE_TENANT_ID != ''
+        uses: azure/trusted-signing-action@v0.5.1
+        with:
+          endpoint: ${{ vars.TS_ENDPOINT }}
+          trusted-signing-account-name: ${{ vars.TS_ACCOUNT_NAME }}
+          certificate-profile-name: ${{ vars.TS_CERT_PROFILE }}
+          files-folder: Excel Recovery/bin/Release
+          files-folder-filter: exe
+          files-folder-recurse: true
+          file-digest: SHA256
+          timestamp-rfc3161: http://timestamp.acs.microsoft.com
+          timestamp-digest: SHA256
       - name: Package native build
         shell: bash
         run: |
