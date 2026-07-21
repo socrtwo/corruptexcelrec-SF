@@ -69,7 +69,25 @@
 
     info(`Loaded "${file.name}" (${fmtBytes(file.size)})`);
 
-    state.format = detectFormat(state.bytes, file.name);
+    // First analysis step: shared S2 File Identifier. Reads magic numbers,
+    // separates embedded/concatenated foreign files (offered for download in
+    // the panel), and hands back the bytes this program should repair.
+    let idReport = null;
+    if (window.S2FileID) {
+      try {
+        idReport = S2FileID.analyze(state.bytes, { programKey: 'corruptexcelrec', fileName: file.name });
+        S2FileID.renderPanel($('fileid'), idReport);
+        info(`Identified: ${idReport.primary.description}`);
+        if (idReport.mismatch) warn('This tool repairs .xls/.xlsx — the file appears to be a different type. See the recommendation above.');
+        if (idReport.foreign.length) warn(`${idReport.foreign.length} embedded/concatenated file(s) of a different type separated — download them above before repairing the rest.`);
+        if (idReport.multiple) info(`Split into ${idReport.segments.length} segments; repairing segment ${idReport.proceedSegment.index + 1} (${idReport.proceedSegment.ext}, ${fmtBytes(idReport.proceedSegment.length)}).`);
+        state.bytes = idReport.proceedBytes; // every recovery strategy reads state.bytes
+      } catch (e) {
+        warn(`File identification failed (${e.message || e}) — continuing with raw bytes.`);
+      }
+    }
+
+    state.format = detectFormat(state.bytes, file.name, idReport);
     $('m-format').textContent = state.format.toUpperCase();
     info(`Detected format: ${state.format}`);
 
@@ -90,7 +108,12 @@
     $('section-recover').classList.remove('hidden');
   }
 
-  function detectFormat(bytes, name) {
+  function detectFormat(bytes, name, idReport) {
+    // Prefer the S2 File Identifier verdict when it names a type we handle.
+    if (idReport) {
+      const ext = (idReport.proceedSegment || idReport.primary).ext;
+      if (ext === 'xlsx' || ext === 'xls') return ext;
+    }
     if (bytes.length >= 4 && bytes[0] === 0x50 && bytes[1] === 0x4B && (bytes[2] === 0x03 || bytes[2] === 0x05 || bytes[2] === 0x07)) return 'xlsx';
     if (bytes.length >= 8 && bytes[0] === 0xD0 && bytes[1] === 0xCF && bytes[2] === 0x11 && bytes[3] === 0xE0) return 'xls';
     const lower = name.toLowerCase();
