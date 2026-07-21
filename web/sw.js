@@ -1,10 +1,11 @@
 // Service worker — offline shell for the PWA.
-const CACHE = 'excel-recovery-v2';
+const CACHE = 'excel-recovery-v3';
 const SHELL = [
   './',
   './index.html',
   './app.js',
   './immortal-inflate.js',
+  './s2-file-id.js',
   './manifest.webmanifest',
   './icons/icon.svg',
   './icons/icon-192.png',
